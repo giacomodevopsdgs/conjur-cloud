@@ -1,0 +1,9 @@
+- !policy
+  id: jenkins-apps
+  body:
+    
+    - !host
+      id: GlobalCredentials
+      annotations:
+          authn-jwt/jenkins-sett/jenkins_task_noun: Build
+          authn-jwt/jenkins-sett/jenkins_pronoun: Global

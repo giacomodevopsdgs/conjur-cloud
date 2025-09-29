@@ -2,12 +2,12 @@ services:
   conjurcloudcli:
     container_name: conjurcloudcli
     image: registry.access.redhat.com/ubi9/ubi
-    env_file:
-      - ./git-secrets.env
+    # env_file:
+    #   - ./git-secrets.env
     volumes:
       - ./conjurcloudcli-rhel8-Rls-v1.1.3.tar.gz:/tmp/conjurcli.tar.gz:ro
       # optional: persist CLI config/tokens on your host
-      # - ./conjur-home:/root/.conjur
+      - ./conjur-cloud-folder:/tmp/conjur-cloud-folder
       # - ./netrc-home:/root
     tty: true
     stdin_open: true

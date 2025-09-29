@@ -1,0 +1,5 @@
+- !policy
+  id: conjur/authn-jwt/jenkins-sett
+  body:
+    - !variable token-app-property
+    - !variable identity-path

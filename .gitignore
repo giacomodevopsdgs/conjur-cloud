@@ -5,3 +5,4 @@ netrc-home/.conjurrc
 netrc-home/.conjur
 netrc-home
 git-secrets.env
+jenkins.pem

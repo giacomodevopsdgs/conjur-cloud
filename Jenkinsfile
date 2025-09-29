@@ -3,10 +3,13 @@ pipeline {
   stages {
     stage('Test Conjur secret') {
       steps {
-        withCredentials([string(credentialsId: 'CONJUR_SECRET', variable: 'CONJUR_VAL')]) {
+        withCredentials([
+          conjurSecretCredential(credentialsId: 'CONJUR_SECRET', variable: 'TEST_SECRET')
+        ]) {
           sh '''
-            echo "Conjur secret fetched. Length: ${#CONJUR_VAL}"
-            test -n "$CONJUR_VAL"
+            set +x
+            [ -n "$TEST_SECRET" ] || { echo "Conjur secret is empty"; exit 1; }
+            echo "Secret length: ${#TEST_SECRET}"
           '''
         }
       }

@@ -1,0 +1,28 @@
+pipeline {
+  agent any
+
+  // If you haven't set these globally in Manage Jenkins → Configure System,
+  // uncomment and fill them in here:
+  // environment {
+  //   CONJUR_APPLIANCE_URL = 'https://api.dgsspa.conjur.cloud'
+  //   CONJUR_ACCOUNT       = 'dgsspa'
+  //   CONJUR_AUTHN_LOGIN   = 'host/jenkins'
+  //   CONJUR_AUTHN_METHOD  = 'jwt'  
+  // }
+
+  stages {
+    stage('Verify Conjur Secret') {
+      steps {
+        echo "touch ground"
+        // Fetch the Conjur secret into the env var SECRET
+        withCredentials([conjurSecretCredential(
+          credentialsId: 'CONJUR_SECRET',   // Jenkins credential ID for your Conjur variable
+          variable:      'SECRET'
+        )]) {
+          // Echo only the first 4 chars, mask the rest
+          echo "🔑 Secret fetched: ${env.SECRET.substring(0,4)}****"
+        }
+      }
+    }
+  }
+}

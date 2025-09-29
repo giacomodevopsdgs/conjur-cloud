@@ -1,0 +1,69 @@
+pipeline {
+  agent any
+
+  environment {
+    // ← define your custom var here
+    MY_MESSAGE   = 'Hello from Jenkins & BusyBox!'
+    OCP_SERVER   = 'https://api.crc.testing:6443'
+    OCP_CREDENTIALS = 'ocp-token'
+    OCP_PROJECT  = 'demo-project'
+  }
+
+stage('Login & Grab Token') {
+  steps {
+    // Log in using the stored OCP token credential
+    withCredentials([string(credentialsId: 'ocp-token', variable: 'TOKEN')]) {
+      sh """
+        oc login --server=${OCP_SERVER} --token=${TOKEN}
+      """
+    }
+  }  }     } 
+//   stages {
+//     stage('Login to OpenShift') {
+//       steps {
+//         openshiftLogin apiURL: "${OCP_SERVER}", credentialsId: "${OCP_CREDENTIALS}"
+//         openshiftProject "${OCP_PROJECT}"
+//       }
+//     }
+
+//     stage('Deploy BusyBox') {
+//       steps {
+//         // write out the manifest on-the-fly and apply it
+//         writeFile file: 'busybox-deploy.yaml', text: """
+//         apiVersion: apps/v1
+//         kind: Deployment
+//         metadata:
+//           name: busybox-demo
+//         spec:
+//           replicas: 1
+//           selector:
+//             matchLabels:
+//               app: busybox-demo
+//           template:
+//             metadata:
+//               labels:
+//                 app: busybox-demo
+//             spec:
+//               containers:
+//               - name: busybox
+//                 image: busybox:latest
+//                 env:
+//                 - name: MY_MESSAGE
+//                   value: "${MY_MESSAGE}"
+//                 command: ["sh","-c","echo \\\"\$MY_MESSAGE\\\" && sleep 3600"]
+//         """
+//         sh 'oc apply -f busybox-deploy.yaml'
+//       }
+//     }
+//   }
+
+//   post {
+//     success {
+//       echo "✅ BusyBox deployed—check logs for the message!"
+//       sh "oc logs -l app=busybox-demo -n ${OCP_PROJECT}"
+//     }
+//     failure {
+//       echo "🚨 Pipeline failed."
+//     }
+//   }
+// }

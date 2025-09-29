@@ -1,0 +1,7 @@
+conjurcloudcli-rhel8-Rls-v1.1.3.tar.gz
+netrc-home/.conjur_credentials
+netrc-home/.bash_history
+netrc-home/.conjurrc
+netrc-home/.conjur
+netrc-home
+git-secrets.env

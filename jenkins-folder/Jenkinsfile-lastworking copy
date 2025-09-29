@@ -1,0 +1,47 @@
+pipeline {
+  agent any
+
+  triggers {
+    // Polling disabled if you use webhooks – feel free to remove
+    pollSCM('H/5 * * * *')
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        // Simply grab whatever branch triggered the build
+        checkout scm
+      }
+    }
+
+    stage('Build') {
+      steps {
+        // Simulate a build—replace with your real build commands
+        echo "🛠  Building..."
+      }
+    }
+
+    stage('Test') {
+      steps {
+        // Simulate tests—replace with your real test commands
+        echo "✅  Running tests..."
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        // Dummy deploy step
+        echo "🚀  (Pretend) Deploying to staging"
+      }
+    }
+  }
+
+  post {
+    success {
+      echo "🎉  Build succeeded!"
+    }
+    failure {
+      echo "❌  Build failed!"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+pipeline {
+  agent any
+  environment {
+    // Inject your OpenShift token from Jenkins credentials
+    OCP_TOKEN = credentials('ocp-token')
+  }
+  stages {
+    stage('List Pods') {
+      steps {
+        script {
+          // replace with your API URL and project name
+          def apiUrl  = 'https://10.13.137.207:8443'
+          def project = 'demo-project'
+
+          // Log in and switch project entirely within the plugin
+          openshift.withCluster(apiUrl, OCP_TOKEN) {
+            openshift.withProject(project) {
+              // This returns a groovy object of the 'pods' resource
+              def pods = openshift.get('pods').objects
+              
+              // Print each pod’s name
+              pods.each { p ->
+                echo "• ${p.metadata.name}"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

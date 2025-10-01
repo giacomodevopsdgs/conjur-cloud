@@ -6,3 +6,4 @@ netrc-home/.conjur
 netrc-home
 git-secrets.env
 jenkins.pem
+conjur-edge-1.5.0.tar.gz

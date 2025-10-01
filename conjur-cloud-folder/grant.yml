@@ -1,6 +1,6 @@
 - !grant
   role: !group apps
-  member: !host /data/jenkins-apps/GlobalCredentials
+  member: !host data/jenkins-apps/"GlobalCredentials/jwt"
 
 
 

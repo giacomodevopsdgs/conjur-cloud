@@ -7,10 +7,9 @@ pipeline {
           conjurSecretCredential(credentialsId: 'CONJUR_SECRET', variable: 'TEST_SECRET')
         ]) {
           sh '''
-            echo "JOB_NAME=${env.JOB_NAME}"
             set +x
             [ -n "$TEST_SECRET" ] || { echo "Conjur secret is empty"; exit 1; }
-            echo "Secret length: ${#TEST_SECRET}"
+            echo "Secret length: ${TEST_SECRET}"
           '''
         }
       }

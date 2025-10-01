@@ -1,2 +1,5 @@
 - !policy
-  id: data/jenkins-jwt-apps
+  id: jenkins-apps
+  body:
+    - !policy
+      id: GlobalCredentials
